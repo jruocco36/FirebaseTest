@@ -8,6 +8,7 @@ https://pub.dev/packages/firebase_core#-installing-tab-
 https://pub.dev/packages/cloud_firestore#-installing-tab-  
 https://pub.dev/packages/firebase_auth#-installing-tab-  
 https://pub.dev/packages/firebase_analytics#-installing-tab-  
+https://pub.dev/packages/provider#-installing-tab-  
 
 android/build.gradle
 ```
@@ -36,6 +37,7 @@ dependencies:
   cloud_firestore: ^0.13.5
   firebase_auth: ^0.16.0
   firebase_analytics: ^5.0.11
+  provider: ^4.0.5+1  # provider for state management
 ```
 
 https://console.firebase.google.com/  
