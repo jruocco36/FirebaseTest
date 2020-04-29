@@ -6,7 +6,7 @@ https://pub.dev/packages/cloud_firestore#-installing-tab-
 https://pub.dev/packages/firebase_auth#-installing-tab-  
 https://pub.dev/packages/firebase_analytics#-installing-tab-  
 
-Project root > build.gradle
+android/build.gradle
 ```
 dependencies {
         ...
@@ -14,7 +14,7 @@ dependencies {
     }
 ```
 
-android > app > build.gradle
+android/app/build.gradle
 ```
 apply plugin: 'com.google.gms.google-services'
 ...
@@ -37,4 +37,4 @@ dependencies:
 
 https://console.firebase.google.com/  
 - Add project
-  - ApplicationId must match build.gradle
+  - Package name must match ApplicationId in android/app/build.gradle
