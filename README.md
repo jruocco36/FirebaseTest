@@ -1,6 +1,6 @@
 ## Add Firebase to flutter project
 
-Created from tutorial:  
+App created from tutorial:  
 https://www.youtube.com/watch?v=sfA3NWDBPZ4  
 
 Get latest dependency versions here:  
