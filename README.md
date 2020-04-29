@@ -2,6 +2,7 @@
 
 App created from tutorial:  
 https://www.youtube.com/watch?v=sfA3NWDBPZ4  
+https://github.com/iamshaunjp/flutter-firebase  
 
 Get latest dependency versions here:  
 https://pub.dev/packages/firebase_core#-installing-tab-  
