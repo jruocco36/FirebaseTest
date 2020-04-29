@@ -1,5 +1,11 @@
 ## Add Firebase to flutter project
 
+Get latest dependency versions here:  
+https://pub.dev/packages/firebase_core#-installing-tab-  
+https://pub.dev/packages/cloud_firestore#-installing-tab-  
+https://pub.dev/packages/firebase_auth#-installing-tab-  
+https://pub.dev/packages/firebase_analytics#-installing-tab-  
+
 Project root > build.gradle
 ```
 dependencies {
@@ -23,10 +29,10 @@ pubspec.yaml
 ```
 dependencies:
   ...
-  firebase_analytics: ^5.0.11
   firebase_core: ^0.4.4+3
   cloud_firestore: ^0.13.5
   firebase_auth: ^0.16.0
+  firebase_analytics: ^5.0.11
 ```
 
 https://console.firebase.google.com/  
