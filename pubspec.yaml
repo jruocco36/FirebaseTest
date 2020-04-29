@@ -29,6 +29,8 @@ dependencies:
   firebase_auth: ^0.16.0
   firebase_analytics: ^5.0.11
 
+  rename: ^1.1.9
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

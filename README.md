@@ -1,5 +1,8 @@
 ## Add Firebase to flutter project
 
+Created from tutorial:  
+https://www.youtube.com/watch?v=sfA3NWDBPZ4  
+
 Get latest dependency versions here:  
 https://pub.dev/packages/firebase_core#-installing-tab-  
 https://pub.dev/packages/cloud_firestore#-installing-tab-  
@@ -38,3 +41,8 @@ dependencies:
 https://console.firebase.google.com/  
 - Add project
   - Package name must match ApplicationId in android/app/build.gradle
+- Download google-services.json and place in android/app folder
+
+## Project overview
+
+Authentication handled in services/auth.dart
