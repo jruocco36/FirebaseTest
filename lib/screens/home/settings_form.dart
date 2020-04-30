@@ -47,9 +47,10 @@ class _SettingsFormState extends State<SettingsForm> {
                 ),
                 SizedBox(height: 20.0),
                 TextFormField(
+                  initialValue: userData.name,
                   decoration: textInputDecoration.copyWith(hintText: 'Name'),
                   validator: (val) =>
-                      val.isEmpty ? 'Please enter a name' : userData.name,
+                      val.isEmpty ? 'Please enter a name' : null,
                   onChanged: (val) => setState(() => _currentName = val),
                 ),
                 SizedBox(height: 20.0),
@@ -72,8 +73,10 @@ class _SettingsFormState extends State<SettingsForm> {
                   min: 100.0,
                   max: 900.0,
                   divisions: 8, // (900-100/)100 = 8  -- increments of 100
-                  activeColor: Colors.brown[_currentStrength ?? userData.strength],
-                  inactiveColor: Colors.brown[_currentStrength ?? userData.strength],
+                  activeColor:
+                      Colors.brown[_currentStrength ?? userData.strength],
+                  inactiveColor:
+                      Colors.brown[_currentStrength ?? userData.strength],
                   onChanged: (val) =>
                       setState(() => _currentStrength = val.round()),
                 ),
@@ -84,9 +87,14 @@ class _SettingsFormState extends State<SettingsForm> {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () async {
-                    print(_currentName);
-                    print(_currentSugars);
-                    print(_currentStrength);
+                    if (_formKey.currentState.validate()) {
+                      await DatabaseService(uid: user.uid).updateUserData(
+                        _currentSugars ?? userData.sugars,
+                        _currentName ?? userData.name,
+                        _currentStrength ?? userData.strength,
+                      );
+                      Navigator.pop(context);
+                    }
                   },
                 ),
               ],

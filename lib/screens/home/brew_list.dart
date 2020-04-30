@@ -14,7 +14,7 @@ class _BrewListState extends State<BrewList> {
     // grab current list of brews from DatabaseService through provider
     // provider is StreamProvider from the parent 'Home' widget that is
     // listening to changes to the DatabaseService 'brews' collection stream
-    final brews = Provider.of<List<Brew>>(context);
+    final brews = Provider.of<List<Brew>>(context) ?? [];
 
     // iterates through our list and creates an array of widgets with 
     // one widget for each item
