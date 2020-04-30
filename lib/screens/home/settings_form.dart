@@ -21,14 +21,15 @@ class _SettingsFormState extends State<SettingsForm> {
 
   @override
   Widget build(BuildContext context) {
-    // when you only need to listen to stream data in one widget, using
-    // StreamBuilder is simpler than using StreamProvider. StreamProvider
-    // is good for when you need to pass stream data to multiple widgets
 
     // can grab user id from StreamProvider of parent widgets
     // (main > Home > SettingsForm)
     final user = Provider.of<User>(context);
 
+    // When you only need to listen to stream data in one widget, using
+    // StreamBuilder is simpler than using StreamProvider. StreamProvider
+    // is better for when you need to pass stream data to multiple widgets
+    // by accessing Provider.of<DataType>(context)
     return StreamBuilder<UserData>(
       // set listening stream to user data stream from DatabaseService
       stream: DatabaseService(uid: user.uid).userData,
