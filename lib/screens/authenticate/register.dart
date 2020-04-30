@@ -91,7 +91,7 @@ class _RegisterState extends State<Register> {
                   color: Colors.red,
                   fontSize: 14.0,
                 ),
-              )
+              ),
             ],
           ),
         ),

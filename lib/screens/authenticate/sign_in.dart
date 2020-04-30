@@ -12,10 +12,12 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
 
   // text field state
   String email = '';
   String password = '';
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +40,16 @@ class _SignInState extends State<SignIn> {
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
         child: Form(
+          key: _formKey,
           child: Column(
             children: <Widget>[
               SizedBox(height: 20.0),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Username'),
+                decoration: InputDecoration(labelText: 'Email'),
                 onChanged: (val) {
                   setState(() => email = val);
                 },
+                validator: (val) => val.isEmpty ? 'Enter email' : null,
               ),
               SizedBox(height: 20.0),
               TextFormField(
@@ -54,6 +58,9 @@ class _SignInState extends State<SignIn> {
                 onChanged: (val) {
                   setState(() => password = val);
                 },
+                validator: (val) => val.length < 6
+                    ? 'Password must be at least 6 characters'
+                    : null,
               ),
               SizedBox(height: 20.0),
               RaisedButton(
@@ -63,10 +70,28 @@ class _SignInState extends State<SignIn> {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
-                  print(email);
-                  print(password);
-                  await _auth.signInWithCredential();
+                  if (_formKey.currentState.validate()) {
+                    dynamic result =
+                        await _auth.signInWithEmailAndPassword(email, password);
+                    if (result == null) {
+                      setState(() =>
+                          error = 'Not a valid email and password');
+                    }
+                    // if sign in successful, StreamProvider will pick up our new
+                    // user and our Wrapper widget will automatically switch to
+                    // display our Home widget
+                  }
                 },
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Text(
+                error,
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 14.0,
+                ),
               ),
             ],
           ),
