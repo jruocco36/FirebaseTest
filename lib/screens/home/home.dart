@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_test/services/auth.dart';
 import 'package:firebase_test/services/database.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_test/screens/home/brew_list.dart';
+import 'package:firebase_test/models/brew.dart';
 
 class Home extends StatelessWidget {
   final AuthService _auth = AuthService();
@@ -11,7 +11,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // listen for any changes to 'brews' collection stored DatabaseService
-    return StreamProvider<QuerySnapshot>.value(
+    return StreamProvider<List<Brew>>.value(
       value: DatabaseService().brews,
       child: Scaffold(
         backgroundColor: Colors.brown[50],

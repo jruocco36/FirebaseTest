@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_test/models/brew.dart';
 
 class DatabaseService {
   // user id (don't have multiple users using same app, so can specify this here)
@@ -19,8 +20,21 @@ class DatabaseService {
     });
   }
 
+  // brew list from snapshot
+  List<Brew> _brewListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      return Brew(
+        // ?? - if doesn't exist, return ''/'0'/0
+        name: doc.data['name'] ?? '',
+        sugars: doc.data['sugars'] ?? '0',
+        strength: doc.data['strength'] ?? 0,
+      );
+    }).toList();
+  }
+
   // get brews stream
-  Stream<QuerySnapshot> get brews {
-    return brewCollection.snapshots();
+  Stream<List<Brew>> get brews {
+    return brewCollection.snapshots()
+    .map(_brewListFromSnapshot);
   }
 }
