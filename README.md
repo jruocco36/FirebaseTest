@@ -1,3 +1,5 @@
+Anonymous sign in only
+
 ## Add Firebase to flutter project
 
 App created from tutorial:  
