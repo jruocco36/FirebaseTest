@@ -4,6 +4,7 @@ import 'package:firebase_test/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_test/screens/home/brew_list.dart';
 import 'package:firebase_test/models/brew.dart';
+import 'package:firebase_test/screens/home/settings_form.dart';
 
 class Home extends StatelessWidget {
   final AuthService _auth = AuthService();
@@ -16,7 +17,7 @@ class Home extends StatelessWidget {
         builder: (context) {
           return Container(
             padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-            child: Text('bottom sheet'),
+            child: SettingsForm(),
           );
         },
       );
