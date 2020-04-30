@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_test/shared/constants.dart';
 import 'package:firebase_test/services/auth.dart';
 
 class Register extends StatefulWidget {
@@ -45,7 +46,7 @@ class _RegisterState extends State<Register> {
             children: <Widget>[
               SizedBox(height: 20.0),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: textInputDecoration.copyWith(hintText: 'Email'),
                 onChanged: (val) {
                   setState(() => email = val);
                 },
@@ -54,7 +55,7 @@ class _RegisterState extends State<Register> {
               SizedBox(height: 20.0),
               TextFormField(
                 obscureText: true,
-                decoration: InputDecoration(labelText: 'Password'),
+                decoration: textInputDecoration.copyWith(hintText: 'Password'),
                 onChanged: (val) {
                   setState(() => password = val);
                 },
