@@ -14,8 +14,8 @@ class AuthService {
   // whenever there is a change in auth state, return firebase user
   Stream<User> get user {
     return _auth.onAuthStateChanged
-        .map(_userFromFirebaseUser);  // equivalent to below
-        // .map((FirebaseUser user) => _userFromFirebaseUser(user));
+        .map(_userFromFirebaseUser); // equivalent to below
+    // .map((FirebaseUser user) => _userFromFirebaseUser(user));
   }
 
   //sign in anon
@@ -29,8 +29,9 @@ class AuthService {
       return null;
     }
   }
+
   //sign in with email & password
-  Future signIn() async {
+  Future signInWithCredential() async {
     // try {
     //   AuthResult result = await _auth.signInWithCredential();
     //   FirebaseUser user = result.user;
@@ -42,12 +43,23 @@ class AuthService {
   }
 
   //register with email/password
+  Future registerWithEmailPassword(String email, String password) async {
+    try {
+      AuthResult result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      FirebaseUser user = result.user;
+      return _userFromFirebaseUser(user);
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 
   //sign out
   Future signOut() async {
     try {
       return await _auth.signOut();
-    } catch(e) {
+    } catch (e) {
       print(e.toString());
       return null;
     }
