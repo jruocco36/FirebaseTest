@@ -34,7 +34,7 @@ class _SignInState extends State<SignIn> {
               title: Text('Sign in to Brew Crew'),
               actions: <Widget>[
                 FlatButton.icon(
-                  icon: Icon(Icons.person),
+                  icon: Icon(Icons.person_add),
                   label: Text('Register'),
                   onPressed: () {
                     widget.toggleView();
