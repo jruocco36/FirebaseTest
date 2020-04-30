@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_test/shared/constants.dart';
+import 'package:firebase_test/models/user.dart';
+import 'package:firebase_test/services/database.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_test/shared/loading.dart';
 
 class SettingsForm extends StatefulWidget {
   @override
@@ -17,58 +21,81 @@ class _SettingsFormState extends State<SettingsForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: <Widget>[
-          Text(
-            'Update your brew settings',
-            style: TextStyle(fontSize: 18.0),
-          ),
-          SizedBox(height: 20.0),
-          TextFormField(
-            decoration: textInputDecoration.copyWith(hintText: 'Name'),
-            validator: (val) => val.isEmpty ? 'Please enter a name' : null,
-            onChanged: (val) => setState(() => _currentName = val),
-          ),
-          SizedBox(height: 20.0),
-          // dropdown
-          DropdownButtonFormField(
-            decoration: textInputDecoration,
-            isDense: true,
-            value: _currentSugars ?? '0',
-            items: sugars.map((sugar) {
-              return DropdownMenuItem(
-                value: sugar,
-                child: Text('$sugar sugars'),
-              );
-            }).toList(),
-            onChanged: (val) => setState(() => _currentSugars = val),
-          ),
-          // slider
-          Slider(
-            value: (_currentStrength ?? 100).toDouble(),
-            min: 100.0,
-            max: 900.0,
-            divisions: 8, // (900-100/)100 = 8  -- increments of 100
-            activeColor: Colors.brown[_currentStrength ?? 100],
-            inactiveColor: Colors.brown[_currentStrength ?? 100],
-            onChanged: (val) => setState(() => _currentStrength = val.round()),
-          ),
-          RaisedButton(
-            color: Colors.pink[400],
-            child: Text(
-              'Update',
-              style: TextStyle(color: Colors.white),
+    // when you only need to listen to stream data in one widget, using
+    // StreamBuilder is simpler than using StreamProvider. StreamProvider
+    // is good for when you need to pass stream data to multiple widgets
+
+    // can grab user id from StreamProvider of parent widgets
+    // (main > Home > SettingsForm)
+    final user = Provider.of<User>(context);
+
+    return StreamBuilder<UserData>(
+      // set listening stream to user data stream from DatabaseService
+      stream: DatabaseService(uid: user.uid).userData,
+      builder: (context, snapshot) {
+        // snapshot is the data coming in from the stream
+        if (snapshot.hasData) {
+          UserData userData = snapshot.data;
+
+          return Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                Text(
+                  'Update your brew settings',
+                  style: TextStyle(fontSize: 18.0),
+                ),
+                SizedBox(height: 20.0),
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(hintText: 'Name'),
+                  validator: (val) =>
+                      val.isEmpty ? 'Please enter a name' : userData.name,
+                  onChanged: (val) => setState(() => _currentName = val),
+                ),
+                SizedBox(height: 20.0),
+                // dropdown
+                DropdownButtonFormField(
+                  decoration: textInputDecoration,
+                  isDense: true,
+                  value: _currentSugars ?? userData.sugars,
+                  items: sugars.map((sugar) {
+                    return DropdownMenuItem(
+                      value: sugar,
+                      child: Text('$sugar sugars'),
+                    );
+                  }).toList(),
+                  onChanged: (val) => setState(() => _currentSugars = val),
+                ),
+                // slider
+                Slider(
+                  value: (_currentStrength ?? userData.strength).toDouble(),
+                  min: 100.0,
+                  max: 900.0,
+                  divisions: 8, // (900-100/)100 = 8  -- increments of 100
+                  activeColor: Colors.brown[_currentStrength ?? userData.strength],
+                  inactiveColor: Colors.brown[_currentStrength ?? userData.strength],
+                  onChanged: (val) =>
+                      setState(() => _currentStrength = val.round()),
+                ),
+                RaisedButton(
+                  color: Colors.pink[400],
+                  child: Text(
+                    'Update',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () async {
+                    print(_currentName);
+                    print(_currentSugars);
+                    print(_currentStrength);
+                  },
+                ),
+              ],
             ),
-            onPressed: () async {
-              print(_currentName);
-              print(_currentSugars);
-              print(_currentStrength);
-            },
-          ),
-        ],
-      ),
+          );
+        } else {
+          return Loading();
+        }
+      },
     );
   }
 }

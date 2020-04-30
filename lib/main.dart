@@ -9,13 +9,13 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      // create StreamProvider listening for our AuthService class
-      // when onAuthStateChanged in AuthService, returns a user to StreamProvider
-      home: StreamProvider<User>.value(
-        // create instance of our AuthService class and access user stream to listen
-        value: AuthService().user,
-        child: Wrapper(),
+    // create StreamProvider listening for our AuthService class
+    // when onAuthStateChanged in AuthService, returns a user to StreamProvider
+    return StreamProvider<User>.value(
+      // create instance of our AuthService class and access user stream to listen
+      value: AuthService().user,
+      child: MaterialApp(
+        home: Wrapper(),
       ),
     );
   }
